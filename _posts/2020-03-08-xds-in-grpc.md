@@ -35,7 +35,7 @@ tags: gRPC xDS Envoy
 ## `Client Side` 
 
 当前 `xDS` 在 `gRPC Client` 上的实现架构如下：
-![29aa7b434afecbc25207bf7a2a9d0b87.png](evernotecid://81F1013C-C36D-4522-9220-1289E29E5F94/appyinxiangcom/373756/ENResource/p12174)
+![grpc-client-arch.png](https://github.com/grpc/proposal/raw/master/A27_graphics/grpc_client_architecture.png)
 
 `xDS` 本身就包含了服务发现和负载均衡的概念，因此，在 `gRPC Client` 上同时对应了 `resolver` 和 `balancer`，`xDS Resolver` 与 `xDS Balancer` 共享同一个 `xDS Client`，`xDS Resolver` 通过 `xDS` 中的 `LDS` 和 `RDS` 来实现服务发现的功能，通过 `CDS` 和 `EDS` 来实现负载均衡的逻辑。不过，要注意的是 `RDS` 并不会直接返回目标服务的地址列表，而是要等 `EDS` 完成之后才会得到地址列表。`EDS` 支持按优先级和权重来分配流量，不过，目前权重只支持 `Locality` 级别的，对于同一个 `Locality` 的 `Endpoint` 还是默认使用 `round-robin`。
 
