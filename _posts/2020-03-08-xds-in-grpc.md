@@ -46,6 +46,6 @@ tags: gRPC xDS Envoy
 ## `Server Side`
 `xDS` 在 `gRPC Client` 方向上的进展已经持续一年多了，而在 `gRPC Server` 方向才刚刚开始。
 
-如前所述，`xDS` 的一部分配置对应的是 `gRPC Client`，还有一部分对应的是 `gRPC Server` 部分的功能需求，比如 `Listen` 的端口，`TLS` 的配置，鉴权，限流等配置，在 `Envoy` 中这部分配置也是可以通过 `xDS` 协议进行动态发现的。对于 `gRPC Client`，由于已经有了 `Resolver` 和 `Balancer` 的扩展机制，通过实现对应 `xDS Resolver` 和 `Balancer` 就可以轻易完成 `xDS` 协议在 `gRPC Client` 上的应用，而 `gRPC Server` 的扩展机制就只有 `interceptor`，但是实现一个类似的 `xDS interceptor` 又不能满足 `gRPC Server` 动态获取 `Server` 端配置，并在配置更新时得到通知的功能需求。`gRPC` 给出的方案是在原有的 `gRPC Server` 基础上实现一个 `XdsServer`，实现 `xDS` 的逻辑，并且提供原 `Server` 相同的能力，更多的细节请参考 [A36-xds-for-servers](https://github.com/grpc/proposal/blob/master/A36-xds-for-servers.md
+如前所述，`xDS` 的一部分配置对应的是 `gRPC Client`，还有一部分对应的是 `gRPC Server` 部分的功能需求，比如 `Listen` 的端口，`TLS` 的配置，鉴权，限流等配置，在 `Envoy` 中这部分配置也是可以通过 `xDS` 协议进行动态发现的。对于 `gRPC Client`，由于已经有了 `Resolver` 和 `Balancer` 的扩展机制，通过实现对应 `xDS Resolver` 和 `Balancer` 就可以轻易完成 `xDS` 协议在 `gRPC Client` 上的应用，而 `gRPC Server` 的扩展机制就只有 `interceptor`，但是实现一个类似的 `xDS interceptor` 又不能满足 `gRPC Server` 动态获取 `Server` 端配置，并在配置更新时得到通知的功能需求。`gRPC` 给出的方案是在原有的 `gRPC Server` 基础上实现一个 `XdsServer`，实现 `xDS` 的逻辑，并且提供原 `Server` 相同的能力，更多的细节请参考 [A36-xds-for-servers](https://github.com/grpc/proposal/blob/master/A36-xds-for-servers.md)
 
 P.S. 如果想了解 `gRPC` 最近的动向，可以关注 `gRPC Proposal` 的 [`repo`](https://github.com/grpc/proposal)，`gRPC` 的功能变更都会先通过提交 `gRFC` 文档，评审通过后才会进入实现阶段。
